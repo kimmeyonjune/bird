@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뽑기 게임</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        .container {
+            margin-top: 50px;
+        }
+        
+        img {
+            width: 600px; /* 이미지 크기 두 배로 변경 */
+            display: block;
+            margin: 0 auto;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>남은 기회: <span id="chances">4</span></p>
+        <img id="prizeImage" src="1.webp" alt="뽑기 결과">
+        <button id="playButton" onclick="play()">◉◉◉◉</button> <!-- 초기 버튼 텍스트 설정 -->
+        <p id="result"></p>
+    </div>
+    <script>
+        let chances = 4;
+        let currentImageIndex = 2;
+        const imageArray = ['2.webp', '3.webp', '4.webp', '5.webp', '6.webp']; // 5.webp 파일 추가
+
+        function play() {
+            if (chances > 0) {
+                chances--;
+                document.getElementById('chances').innerText = chances;
+                updateButtonText(); // 버튼 텍스트 업데이트
+                const randomNumber = Math.floor(Math.random() * 2); // 0 또는 1
+                if (randomNumber === 0) { // 50%의 확률로 이미지 업데이트
+                    updateImage();
+                }
+                if (chances === 0) {
+                    document.getElementById('playButton').disabled = true;
+                }
+            }
+        }
+
+        function updateImage() {
+            if (currentImageIndex <= imageArray.length) {
+                document.getElementById('prizeImage').src = currentImageIndex + '.webp';
+                currentImageIndex++;
+            }
+        }
+
+        function updateButtonText() {
+            let buttonText = '';
+            for (let i = 0; i < chances; i++) {
+                buttonText += '◉'; // 남은 기회 수만큼 ◉ 추가
+            }
+            document.getElementById('playButton').innerText = buttonText;
+        }
+    </script>
+</body>
+</html>
